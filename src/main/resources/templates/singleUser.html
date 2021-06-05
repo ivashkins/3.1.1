@@ -1,20 +1,78 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+<html style="height: 100%">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>User</title>
 </head>
-<body>
-<div>
-    <p th:text="${user.getName()}">V</p>
-    <p th:text="${user.getLastName()}">V</p>
-    <p th:text="${user.getEmail()}">V</p>
-    <p th:text="${user.getId()}">V</p>
-    <br/>
-    <a th:href="@{/logout}">SIR LOG OUT</a>
+<body style="height: 100%">
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar" style="color: white">
+            <b th:text="${user.getEmail} "></b>
 
+            <b> &#160 with roles: </b>
+            <b th:text="${user.getRoles}"></b>
+        </div>
+        <div style="align-items: end">
+            <a th:href="@{/logout}" style="color: gray"> Logout</a>
+        </div>
+    </div>
+</nav>
+<div style="height: 100%;">
+    <div hidden="hidden"><p th:text="${user.toString}"></p></div>
+    <div class="row" style="height: 100%">
+        <div class="container col-2 d-grid gap-2" style="height: 100%">
+            <div>
+                <button href="#userPanel" id="userPanelBtn" class="btn  btn-block btn-primary active"
+                        data-toggle="collapse"
+                        aria-pressed="true" disabled>User
+                </button>
+            </div>
+        </div>
+        <div id="userPanel" class="container col-10 collapse in show"
+             style="background-color: aliceblue; height: 100%">
+            <div class="card-body">
+                <h3>User panel</h3>
+                <div class="table-borderless" style="background-color: white">
+                    <div class="card-header ">
+                        <h5>User</h5>
+                    </div>
+                    <table class="table  table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${user.getId()}"></td>
+                            <td th:text="${user.getName()}"></td>
+                            <td th:text="${user.getLastName}"></td>
+                            <td th:text="${user.getEmail}"></td>
+                            <td th:text="${user.getRoles}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

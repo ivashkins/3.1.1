@@ -24,14 +24,15 @@ public class UserController {
 
 
     @GetMapping("/admin/{id}")
-    public String showUser(@PathVariable long id, ModelMap map) {
-        userService.showUser(id, map);
-        return "singleUser";
+    @ResponseBody
+    public User showUser(@PathVariable long id) {
+        return userService.showUser(id);
+
     }
 
     @GetMapping("/admin")
-    public String adminRole(ModelMap map) {
-        userService.adminRole(map);
+    public String adminRole(ModelMap map,Authentication authentication) {
+        userService.adminRole(map,authentication);
         return "admin";
     }
 
@@ -39,7 +40,7 @@ public class UserController {
     @GetMapping("admin/new")
     public String newUser(ModelMap map) {
         userService.newUser(map);
-        return "newUser";
+        return "newUser2";
     }
 
 
@@ -63,6 +64,9 @@ public class UserController {
 
     @PatchMapping("admin/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+        System.out.println("+");
+
+        System.out.println(user.getName() + " " + user.getRoles());
         userService.update(id,user);
         return "redirect:/admin";
     }

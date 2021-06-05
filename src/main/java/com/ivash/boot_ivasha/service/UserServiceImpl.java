@@ -23,9 +23,7 @@ public class UserServiceImpl implements UserService {
 
     public void getUsers(ModelMap map, Authentication authentication) {
         if (authentication != null) {
-            User user = getShowUser(authentication.getName());
-            map.addAttribute("user", user);
-
+            map.addAttribute("user", getShowUser(authentication.getName()));
         }
     }
 
@@ -35,7 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public void create(User user) {
-        if (user.isAdmin()) {
+
+        if (user.getRole()!=null && user.getRole().contains("admin")) {
             user.addRoles(rolesDao.getAdminRole());
         }
         user.addRoles(rolesDao.getUserRole());
@@ -44,12 +43,14 @@ public class UserServiceImpl implements UserService {
         userDao.addUser(user);
     }
 
-    public void showUser(long id, ModelMap map) {
-        map.addAttribute("user", userDao.show(id));
+    public User showUser(long id ) {
+        System.out.println(userDao.show(id));
+        return userDao.show(id);
     }
 
-    public void adminRole(ModelMap map) {
+    public void adminRole(ModelMap map ,Authentication authentication) {
         map.addAttribute("users", userDao.userList());
+        map.addAttribute("viewer",getShowUser(authentication.getName()));
     }
 
     public void newUser(ModelMap map) {
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void update(long id, User user) {
-        if(user.isAdmin()){
+        if(user.getRole()!=null && user.getRole().contains("admin")){
             user.addRoles(rolesDao.getAdminRole());
         }
         user.addRoles(rolesDao.getUserRole());

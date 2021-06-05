@@ -1,13 +1,12 @@
 package com.ivash.boot_ivasha.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -25,16 +24,8 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Transient
-    private boolean admin;
 
-    public boolean isAdmin() {
-        return admin;
-    }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -42,7 +33,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles=new HashSet<>();
+    private Set<Role> roles=new LinkedHashSet<>();
 
     public User() {
     }
@@ -60,14 +51,14 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", roles=" + roles +
-                '}';
+        return "{ " +
+                "id: " + id + " ," +
+                " name: " + name  + " ," +
+                " password: " + password + " ," +
+                " lastName: " + lastName + " , " +
+                " email: " + email + " ," +
+                " roles: " + roles +
+                " }";
     }
 
     public long getId() {
@@ -140,15 +131,34 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonBackReference
     public Set<Role> getRoleSet() {
         if(roles==null){
-            roles=new HashSet<>();
+            roles=new LinkedHashSet<>();
         }
         return roles;
+    }
+    public String getRoles(){
+        String s="";
+        List<Role> roles = this.roles.stream().sorted((Comparator.comparing(Role::getId))).collect(Collectors.toList());
+        for (Role value : roles) {
+            s = s + value.getRole().toUpperCase(Locale.ROOT) + " ";
+        }
+        return s;
     }
 
     public void setRoleSet(Set<Role> roleSet) {
         this.roles = roleSet;
+    }
+
+    @Transient
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
