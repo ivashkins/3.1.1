@@ -3,12 +3,17 @@ package com.ivash.boot_ivasha.controller;
 
 import com.ivash.boot_ivasha.model.User;
 import com.ivash.boot_ivasha.service.UserService;
+import jdk.jfr.ContentType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 public class UserController {
     final UserService userService;
 
@@ -24,16 +29,13 @@ public class UserController {
 
 
     @GetMapping("/admin/{id}")
-    @ResponseBody
     public User showUser(@PathVariable long id) {
         return userService.showUser(id);
-
     }
 
     @GetMapping("/admin")
-    public String adminRole(ModelMap map,Authentication authentication) {
-        userService.adminRole(map,authentication);
-        return "admin";
+    public List<User> adminRole() {
+        return  userService.adminRole();
     }
 
 

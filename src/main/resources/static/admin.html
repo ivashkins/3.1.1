@@ -33,7 +33,7 @@
             </button>
         </div>
         <div>
-            <button href="#userPanel" id="userPanelBtn" class="btn  btn-block"  data-toggle="collapse"
+            <button href="#userPanel" id="userPanelBtn" class="btn  btn-block" data-toggle="collapse"
                     aria-pressed="true">User
             </button>
         </div>
@@ -127,30 +127,30 @@
         <div class="card-body">
             <h3>User panel</h3>
             <div class="table-borderless" style="background-color: white">
-            <div class="card-header ">
-                <h5>User</h5>
-            </div>
-            <table class="table  table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td th:text="${viewer.getId()}"></td>
-                    <td th:text="${viewer.getName()}"></td>
-                    <td th:text="${viewer.getLastName}"></td>
-                    <td th:text="${viewer.getEmail}"></td>
-                    <td th:text="${viewer.getRoles}"></td>
-                </tr>
-                </tbody>
-            </table>
-            <hr/>
+                <div class="card-header ">
+                    <h5>User</h5>
+                </div>
+                <table class="table  table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${viewer.getId()}"></td>
+                        <td th:text="${viewer.getName()}"></td>
+                        <td th:text="${viewer.getLastName}"></td>
+                        <td th:text="${viewer.getEmail}"></td>
+                        <td th:text="${viewer.getRoles}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
             </div>
         </div>
     </div>
@@ -221,5 +221,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script type="text/javascript" src="/app.js"></script>
+
 
 </body>

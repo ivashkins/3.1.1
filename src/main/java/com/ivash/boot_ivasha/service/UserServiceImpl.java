@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
+import java.util.List;
+
 @Component
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
@@ -48,9 +50,8 @@ public class UserServiceImpl implements UserService {
         return userDao.show(id);
     }
 
-    public void adminRole(ModelMap map ,Authentication authentication) {
-        map.addAttribute("users", userDao.userList());
-        map.addAttribute("viewer",getShowUser(authentication.getName()));
+    public List<User> adminRole() {
+      return userDao.userList();
     }
 
     public void newUser(ModelMap map) {

@@ -5,6 +5,8 @@ import com.ivash.boot_ivasha.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.ModelMap;
 
+import java.util.List;
+
 
 public interface UserService {
      void getUsers(ModelMap map, Authentication authentication);
@@ -15,7 +17,7 @@ public interface UserService {
 
      User showUser(long id);
 
-     void adminRole(ModelMap map,Authentication authentication);
+     List<User> adminRole();
 
      void newUser(ModelMap map);
 
