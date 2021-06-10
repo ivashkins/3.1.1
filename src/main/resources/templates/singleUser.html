@@ -12,10 +12,10 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar" style="color: white">
-            <b th:text="${user.getEmail} "></b>
+            <b th:text="${us.getEmail} "></b>
 
             <b> &#160 with roles: </b>
-            <b th:text="${user.getRoles}"></b>
+            <b th:text="${us.getRoles}"></b>
         </div>
         <div style="align-items: end">
             <a th:href="@{/logout}" style="color: gray"> Logout</a>
@@ -23,7 +23,7 @@
     </div>
 </nav>
 <div style="height: 100%;">
-    <div hidden="hidden"><p th:text="${user.toString}"></p></div>
+    <div hidden="hidden"><p text="${us.toString}"></p></div>
     <div class="row" style="height: 100%">
         <div class="container col-2 d-grid gap-2" style="height: 100%">
             <div>
@@ -53,11 +53,11 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td th:text="${user.getId()}"></td>
-                            <td th:text="${user.getName()}"></td>
-                            <td th:text="${user.getLastName}"></td>
-                            <td th:text="${user.getEmail}"></td>
-                            <td th:text="${user.getRoles}"></td>
+                            <td th:text="${us.getId()}"></td>
+                            <td th:text="${us.getName()}"></td>
+                            <td th:text="${us.getLastName}"></td>
+                            <td th:text="${us.getEmail}"></td>
+                            <td th:text="${us.getRoles}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -74,5 +74,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
 </body>
 </html>

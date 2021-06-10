@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -23,10 +24,22 @@ public class UserServiceImpl implements UserService {
         this.rolesDao = rolesDao;
     }
 
-    public void getUsers(ModelMap map, Authentication authentication) {
+    public ModelAndView getUsers(Authentication authentication) {
         if (authentication != null) {
-            map.addAttribute("user", getShowUser(authentication.getName()));
+            ModelAndView mv=new ModelAndView();
+            mv.setViewName("singleUser");
+            mv.addObject("us",getShowUser(authentication.getName()));
+           return mv;
         }
+        return null;
+    }
+
+    @Override
+    public ModelAndView adminPage(Authentication authentication) {
+        ModelAndView mv=new ModelAndView();
+        mv.setViewName("admin");
+        mv.addObject("user", userDao.show(authentication.getName()));
+        return mv;
     }
 
     public User getShowUser(String name) {
@@ -35,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public void create(User user) {
-
+        long id=user.getId();
         if (user.getRole()!=null && user.getRole().contains("admin")) {
             user.addRoles(rolesDao.getAdminRole());
         }
@@ -58,8 +71,8 @@ public class UserServiceImpl implements UserService {
         map.addAttribute("user", new User());
     }
 
-    public void edit(long id, ModelMap map) {
-        map.addAttribute("user", userDao.show(id));
+    public void edit(long id) {
+       userDao.show(id);
     }
 
     public void delete(long id) {

@@ -4,12 +4,15 @@ package com.ivash.boot_ivasha.service;
 import com.ivash.boot_ivasha.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 
 public interface UserService {
-     void getUsers(ModelMap map, Authentication authentication);
+     ModelAndView getUsers(Authentication authentication);
+
+     ModelAndView adminPage(Authentication authentication);
 
      User getShowUser(String name);
 
@@ -21,7 +24,7 @@ public interface UserService {
 
      void newUser(ModelMap map);
 
-     void edit(long id, ModelMap map);
+     void edit(long id);
 
      void delete(long id);
 

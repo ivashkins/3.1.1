@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -22,9 +23,8 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String getUsers(ModelMap map, Authentication authentication) {
-        userService.getUsers(map, authentication);
-        return "singleUser";
+    public ModelAndView getUsers(Authentication authentication) {
+    return userService.getUsers(authentication);
     }
 
 
@@ -34,8 +34,13 @@ public class UserController {
     }
 
     @GetMapping("/admin")
+    public ModelAndView admin(Authentication authentication) {
+        return userService.adminPage(authentication);
+    }
+
+    @GetMapping("/admin/users")
     public List<User> adminRole() {
-        return  userService.adminRole();
+        return userService.adminRole();
     }
 
 
@@ -47,30 +52,25 @@ public class UserController {
 
 
     @PostMapping("/admin/create")
-    public String create(@ModelAttribute("user") User user) {
+    public void create(@ModelAttribute("user") User user) {
         userService.create(user);
-        return "redirect:/admin";
     }
 
     @GetMapping("/admin/{id}/edit")
-    public String edit(@PathVariable("id") long id, ModelMap map) {
-        userService.edit(id, map);
-        return "edit";
+    public void edit(@PathVariable("id") long id) {
+        userService.edit(id);
     }
 
     @GetMapping("admin/{id}/delete")
-    public String delete(@PathVariable("id") long id) {
+    public Long delete(@PathVariable("id") long id) {
         userService.delete(id);
-        return "redirect:/admin";
+        return id;
     }
 
     @PatchMapping("admin/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-        System.out.println("+");
-
-        System.out.println(user.getName() + " " + user.getRoles());
-        userService.update(id,user);
-        return "redirect:/admin";
+    public User update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+        userService.update(id, user);
+        return userService.showUser(id);
     }
 
 }
