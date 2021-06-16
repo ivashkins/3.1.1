@@ -26,6 +26,24 @@ $(document).ready(function () {
         $('#userPanel').collapse('toggle')
         $('#adminPanelBtn').removeClass('btn-primary').removeClass('active').removeAttr('disabled')
         $('#userPanelBtn').addClass('btn-primary').addClass('active').attr('disabled', true)
+        console.log($('#navName').text())
+        fetch('/admin/users').then(//заполнение таблицы
+            function (response) {
+                response.json().then(function (data) {
+                    var tbUser = ""
+                    data.forEach((u) => {
+                        if (u.email === $('#navName').text()) {
+                            tbUser += "<tr id=" + u.id + ">"
+                            tbUser += "<td id='id-table'>" + u.id + "</td>"
+                            tbUser += "<td id='id-name" + u.id + "'>" + u.name + "</td>"
+                            tbUser += "<td id='id-lastName" + u.id + "'>" + u.lastName + "</td>"
+                            tbUser += "<td id='id-email" + u.id + "'>" + u.email + "</td>"
+                            tbUser += "<td id='id-roles" + u.id + "'>" + u.roles + "</td>"
+                        }
+                    })
+                    $('#tBodyUser').html(tbUser)
+                })
+            })
     })
 
     $('#myFormPatch').on('submit', function (e) {
@@ -38,9 +56,9 @@ $(document).ready(function () {
                 dataType: 'text',
                 type: 'GET',
                 success: function (res) {
-                   $('#'+res).remove();
+                    $('#' + res).remove();
                 },
-                error:function (res) {
+                error: function (res) {
 
                 }
             })
@@ -52,10 +70,10 @@ $(document).ready(function () {
                 data: $('#myFormPatch').serialize(),
                 success: function (res) {
                     var json = JSON.parse(res)
-                    document.getElementById('id-name'+json.id).innerText = json.name
-                    document.getElementById('id-lastName'+json.id).innerText = json.lastName
-                    document.getElementById('id-email'+json.id).innerText = json.email
-                    document.getElementById('id-roles'+json.id).innerText = json.roles
+                    document.getElementById('id-name' + json.id).innerText = json.name
+                    document.getElementById('id-lastName' + json.id).innerText = json.lastName
+                    document.getElementById('id-email' + json.id).innerText = json.email
+                    document.getElementById('id-roles' + json.id).innerText = json.roles
                 },
                 error: function (response) {
                     console.log(response)
@@ -131,36 +149,36 @@ $(document).ready(function () {
         $('.myForm #exampleModal').modal();
     })
 
-function loadTable(){
-    fetch('/admin/users').then(//заполнение таблицы
-        function (response) {
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }// Examine the text in the response
-            response.json().then(function (data) {
-                var tb = ""
-                data.forEach((u) => {
-                    tb += "<tr id=" + u.id + ">"
-                    tb += "<td id='id-table'>" + u.id + "</td>"
-                    tb += "<td id='id-name"+ u.id +"'>" + u.name + "</td>"
-                    tb += "<td id='id-lastName"+ u.id +"'>" + u.lastName + "</td>"
-                    tb += "<td id='id-email"+ u.id +"'>" + u.email + "</td>"
-                    tb += "<td id='id-roles"+ u.id +"'>" + u.roles + "</td>"
-                    tb += "<td>" + "<a class='btn btn-primary eBtn' href='/admin/" + u.id + "' id='eBtn'>Edit</a>" + "</td>"
-                    tb += "<td>" + "<a class='btn btn-danger dBtn'  href='/admin/" + u.id + "'>Delete</a>" + "</td></tr>"
+    function loadTable() {
+        fetch('/admin/users').then(//заполнение таблицы
+            function (response) {
+                if (response.status !== 200) {
+                    console.log('Looks like there was a problem. Status Code: ' +
+                        response.status);
+                    return;
+                }// Examine the text in the response
+                response.json().then(function (data) {
+                    var tb = ""
+                    data.forEach((u) => {
+                        tb += "<tr id=" + u.id + ">"
+                        tb += "<td id='id-table'>" + u.id + "</td>"
+                        tb += "<td id='id-name" + u.id + "'>" + u.name + "</td>"
+                        tb += "<td id='id-lastName" + u.id + "'>" + u.lastName + "</td>"
+                        tb += "<td id='id-email" + u.id + "'>" + u.email + "</td>"
+                        tb += "<td id='id-roles" + u.id + "'>" + u.roles + "</td>"
+                        tb += "<td>" + "<a class='btn btn-primary eBtn' href='/admin/" + u.id + "' id='eBtn'>Edit</a>" + "</td>"
+                        tb += "<td>" + "<a class='btn btn-danger dBtn'  href='/admin/" + u.id + "'>Delete</a>" + "</td></tr>"
 
-                })
-                $('#tbody').html(tb)
+                    })
+                    $('#tbody').html(tb)
 
+                });
+            }
+        )
+            .catch(function (err) {
+                console.log('Fetch Error :-S', err);
             });
-        }
-    )
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
-        });
 
-}
+    }
 
 });

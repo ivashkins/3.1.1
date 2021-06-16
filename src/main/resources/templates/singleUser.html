@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <html style="height: 100%">
 <head>
@@ -12,10 +12,11 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar" style="color: white">
-            <b th:text="${us.getEmail} "></b>
+            <span class="fw-bold" id="navName" th:text="${#authentication.name}">USERNAME</span>
+            <span>&#160 with role(s): </span>
+            <span sec:authorize ="hasAuthority('admin')">Admin </span>
+            <span sec:authorize="hasAuthority('user')"> &#160 User</span>
 
-            <b> &#160 with roles: </b>
-            <b th:text="${us.getRoles}"></b>
         </div>
         <div style="align-items: end">
             <a th:href="@{/logout}" style="color: gray"> Logout</a>
@@ -51,13 +52,13 @@
                             <th>Role</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tBody">
                         <tr>
-                            <td th:text="${us.getId()}"></td>
-                            <td th:text="${us.getName()}"></td>
-                            <td th:text="${us.getLastName}"></td>
-                            <td th:text="${us.getEmail}"></td>
-                            <td th:text="${us.getRoles}"></td>
+                            <td th:text="${#authentication.getPrincipal().id}"> id </td>
+                            <td th:text="${#authentication.getPrincipal().name}"> name </td>
+                            <td th:text="${#authentication.getPrincipal().lastName}"> lastName </td>
+                            <td th:text="${#authentication.getPrincipal().email}"> email </td>
+                            <td th:text="${#authentication.getPrincipal().roles}"> role </td>
                         </tr>
                         </tbody>
                     </table>

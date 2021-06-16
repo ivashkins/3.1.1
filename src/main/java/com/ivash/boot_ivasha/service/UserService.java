@@ -10,9 +10,7 @@ import java.util.List;
 
 
 public interface UserService {
-     ModelAndView getUsers(Authentication authentication);
 
-     ModelAndView adminPage(Authentication authentication);
 
      User getShowUser(String name);
 
@@ -20,7 +18,7 @@ public interface UserService {
 
      User showUser(long id);
 
-     List<User> adminRole();
+     List<User> adminRole(Authentication authentication);
 
      void newUser(ModelMap map);
 

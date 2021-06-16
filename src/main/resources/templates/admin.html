@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <html style="height: 100%">
 <head>
@@ -11,12 +11,15 @@
 <body style="height: 100%">
 
 <nav class="navbar navbar-dark bg-dark">
+
+
     <div class="container-fluid">
         <div class="navbar" style="color: white">
-            <b id="id-navbar" th:text="${user.getEmail}"></b>
+            <span class="fw-bold" id="navName" th:text="${#authentication.name}">USERNAME</span>
+            <span>&#160 with role(s): </span>
+            <span sec:authorize ="hasAuthority('admin')">Admin </span>
+            <span sec:authorize="hasAuthority('user')"> &#160 User</span>
 
-            <b> &#160 with roles: </b>
-            <b id="role-navbar" th:text="${user.getRoles}"></b>
         </div>
         <div style="align-items: end">
             <a th:href="@{/logout}" style="color: gray"> Logout</a>
@@ -138,14 +141,8 @@
                         <th>Role</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td th:text="${user.getId}"></td>
-                        <td th:text="${user.getName}"></td>
-                        <td th:text="${user.getLastName}"></td>
-                        <td th:text="${user.getEmail}"></td>
-                        <td th:text="${user.getRoles}"></td>
-                    </tr>
+                    <tbody id="tBodyUser">
+
                     </tbody>
                 </table>
                 <hr/>

@@ -22,25 +22,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user")
-    public ModelAndView getUsers(Authentication authentication) {
-    return userService.getUsers(authentication);
-    }
-
-
     @GetMapping("/admin/{id}")
     public User showUser(@PathVariable long id) {
         return userService.showUser(id);
     }
 
-    @GetMapping("/admin")
-    public ModelAndView admin(Authentication authentication) {
-        return userService.adminPage(authentication);
-    }
-
     @GetMapping("/admin/users")
-    public List<User> adminRole() {
-        return userService.adminRole();
+    public List<User> adminRole(Authentication authentication) {
+        return userService.adminRole(authentication);
     }
 
 

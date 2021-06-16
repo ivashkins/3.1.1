@@ -19,7 +19,8 @@ public class LoginSuccessHandler implements org.springframework.security.web.aut
         System.out.println(AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
         Set<String> strings = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (strings.contains("admin")) {
-            httpServletResponse.sendRedirect("/admin");
+            httpServletResponse.sendRedirect("/admin/");
+            System.out.println(authentication.getAuthorities() + " " + authentication.getPrincipal());
         } else {
             httpServletResponse.sendRedirect("/user");
         }

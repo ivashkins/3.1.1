@@ -8,13 +8,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@Component
+@Service
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final RolesDao rolesDao;
@@ -22,24 +23,6 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserDao userDao, RolesDao rolesDao) {
         this.userDao = userDao;
         this.rolesDao = rolesDao;
-    }
-
-    public ModelAndView getUsers(Authentication authentication) {
-        if (authentication != null) {
-            ModelAndView mv=new ModelAndView();
-            mv.setViewName("singleUser");
-            mv.addObject("us",getShowUser(authentication.getName()));
-           return mv;
-        }
-        return null;
-    }
-
-    @Override
-    public ModelAndView adminPage(Authentication authentication) {
-        ModelAndView mv=new ModelAndView();
-        mv.setViewName("admin");
-        mv.addObject("user", userDao.show(authentication.getName()));
-        return mv;
     }
 
     public User getShowUser(String name) {
@@ -63,7 +46,7 @@ public class UserServiceImpl implements UserService {
         return userDao.show(id);
     }
 
-    public List<User> adminRole() {
+    public List<User> adminRole(Authentication authentication) {
       return userDao.userList();
     }
 
